@@ -1,0 +1,321 @@
+/* -------- Whole-page constants -------- */
+/* colors */
+$body-background-color: #f9f6f1; /* #FAF8F5;*/
+$card-background-color: #FDFDFC;
+$default-font-color: #000;
+$link-color: #3579C8;
+
+/* fonts */
+$default-font: 'EB Garamond', serif;
+$accent-font: 'Lucida Grande', 'Geneva', sans-serif;
+
+/* page layout */
+$mob-breakpoint: 600px;
+$content-horiz-margin-desk: 36px;
+$content-horiz-margin-mob: 12px;
+@mixin reset-spacing {
+  margin: 0;
+  padding: 0;
+}
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* misc accents */
+$default-border: 1px solid #999;
+$default-transition-time: 300ms;
+
+
+/* -------- Element styles -------- */
+html {
+  color: $default-font-color;
+  background-color: $body-background-color;
+  font-family: $default-font;
+}  
+
+body {
+  width: 85%;
+  max-width: 1100px;
+  margin: 48px auto;
+}
+
+@media (max-width: $mob-breakpoint) {
+  body {
+    @include reset-spacing;
+    width: auto;
+    padding: 16px 0;
+  }
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+}
+
+.button {
+  font-family: $accent-font;
+  text-transform: uppercase;
+  letter-spacing: 1.5pt;
+}
+
+ul {
+  @include reset-spacing;
+}
+
+p:first-child {
+  margin-top: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.framed-img {
+  border: $default-border;
+  padding: 2px;
+}
+
+/* -------- Page header -------- */
+$header-height: 32px;
+$title-size: 40px;
+$subtitle-size: 18px;
+$subtitle-top-margin: $header-height - $subtitle-size;
+
+.header {
+  @include flex-between;
+  border-bottom: $default-border;
+  line-height: $header-height;
+  padding: 0 $content-horiz-margin-desk;
+  margin-bottom: 16px;
+
+  .page-title {
+    font-size: $title-size;
+    /* Make sure title displays over mobile dropdown nav */
+    z-index: 100;
+  }
+
+  .page-title a {
+    color: $default-font-color;
+  }
+
+  .page-subtitle {
+    font-size: $subtitle-size;
+    line-height: $subtitle-size;
+    margin-top: $subtitle-top-margin;
+  }
+}
+
+/* Mobile page header */
+$mob-title-size: 36px;
+$mob-subtitle-size: 16px;
+
+@media (max-width: $mob-breakpoint) {
+  .header {
+    display: block;
+    border: none;
+    text-align: right;
+    padding: 0;
+
+    .nav-icon-and-title {
+      @include flex-between;
+      border-bottom: $default-border;
+    }
+
+    .page-title {
+      font-size: $mob-title-size;
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    .page-subtitle {
+      font-size: $mob-subtitle-size;
+      margin-top: 8px;
+      margin-right: 0;
+      margin-left: auto;
+    }
+  }
+
+  .header > * {
+    padding: 0 $content-horiz-margin-mob;
+  }
+}
+
+/* -------- Fussy mobile navigation -------- */
+$nav-icon-size: 32px;
+$nav-icon-line-closed: $nav-icon-size / 2;
+$nav-icon-line-open: 18px;
+$nav-icon-open-margin: 4px;
+
+@media (max-width: $mob-breakpoint) {
+  .nav-icon {
+    height: $nav-icon-size;
+    width: $nav-icon-size;
+    margin-bottom: 0;
+    margin-top: auto;
+
+    .nav-icon-left, .nav-icon-right {
+      position: absolute;
+      margin-top: $nav-icon-line-closed;
+      height: 0;
+      width: $nav-icon-line-closed;
+      border: 1px solid #333;
+    }
+
+    .nav-icon-left {
+      transform: rotate(45deg);
+      transition: margin-left $default-transition-time;
+    }
+
+    .nav-icon-right {
+      margin-left: 12px;
+      transform: rotate(-45deg);
+      transition: margin-left $default-transition-time;
+    }
+
+    .nav-open .nav-icon-left, .nav-open .nav-icon-right {
+      margin-left: $nav-icon-open-margin;
+      width: $nav-icon-line-open;
+      transition: margin-left $default-transition-time;
+    }
+  }
+}
+
+/* -------- Nav bar -------- */
+.nav-menu {
+  @include flex-between;
+  margin: 32px 0;
+  padding: 0 36px;
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 32px;
+  }
+
+  .nav-current-page {
+    color: #666;
+  }
+
+  .social a {
+    margin-left: 16px;
+  }
+
+  .social img {
+    height: 20px;
+  }
+}
+
+/* Mobile nav menu */
+@media (max-width: $mob-breakpoint) {
+  .nav-menu {
+    @include reset-spacing;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 48px;
+    width: 100%;
+    background-color: $body-background-color;
+    border-bottom: 1px solid #999;
+    z-index: 3;
+    transition: height 300ms;
+
+    ul {
+      margin: 16px;
+    }
+
+    li {
+      display: block;
+      padding-bottom: 16px;
+    }
+    li:last-child {
+      padding-bottom: 0;
+    }
+
+    .social {
+      margin-bottom: 12px;
+      margin-top: auto;
+      margin-right: 12px;
+    }
+
+    .social a {
+      display: inline-block;
+      margin-left: 24px;
+    }
+
+    .social img {
+      height: 16px;
+    }
+  }
+  .nav-menu.nav-open {
+    height: 152px;
+    transition: height 300ms;
+  }
+}
+
+
+/* -------- Page main content -------- */
+.page-container {
+  min-height: 60vh;
+  padding: 0 $content-horiz-margin-desk;
+  /* god I hate css this is just to get .main-page-card to fill height */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.main-page-card {
+  flex-grow: 1;
+  height: 100%;
+}
+
+/* Double border: main card */
+.double-border {
+  padding: 24px 30px; /* extra horiz padding to account for border diff */
+  background-color: $card-background-color;
+  box-sizing: border-box;
+  position: relative;
+  border: $default-border;
+}
+
+/* Double border: white background */
+.double-border:before {
+  content: ' ';
+  background-color: $card-background-color;
+  position: absolute;
+  top: -6px;
+  right: 4px;
+  bottom: -6px;
+  left: 4px;
+  z-index: -1;
+}
+
+/* Double border: border */
+.double-border:after {
+  content: ' ';
+  position: absolute;
+  top: -6px;
+  right: 4px;
+  bottom: -6px;
+  left: 4px;
+  border: $default-border;
+}
+
+
+@media (max-width: $mob-breakpoint) {
+  .page-container {
+    padding-left: $content-horiz-margin-mob;
+    padding-right: $content-horiz-margin-mob;
+  }
+}
+
+
+/* -------- About page styles -------- */
+
+.headshot {
+  float: right;
+}
