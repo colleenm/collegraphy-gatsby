@@ -5,17 +5,17 @@ import { Link } from "gatsby"
 class Header extends React.Component {
   constructor() {
     super()
-    this.pages = ['home', 'research', 'cv', 'about']
+    this.pages = ['home', 'design', 'research', 'about']
     this.pageUrls = {
       'home': '/',
+      'design': '/design/',
       'research': '/research/',
-      'cv': '/cv/',
       'about': '/about/'
     }
     this.pageNames = {
-      'home': 'Design',
+      'home': 'Home',
+      'design': 'Design',
       'research': 'Research',
-      'cv': 'CV',
       'about': 'Me'
     }
     this.navIcon = React.createRef()
@@ -62,7 +62,7 @@ class Header extends React.Component {
               <div className="nav-icon-left"></div>
               <div className="nav-icon-right"></div>
             </div>
-            <div className="page-title"><Link to="/">collegraphy</Link></div>
+            <h1 className="page-title"><Link to="/">collegraphy</Link></h1>
           </div>
           <div className="page-subtitle">
             work &amp; writing by <Link to="/about/" id="subtitle-name-link">
@@ -79,6 +79,9 @@ class Header extends React.Component {
             </a>
             <a href="https://github.com/colleenm" target="_blank">
               <img src="/github.svg" alt="github icon"/>
+            </a>
+            <a href="https://www.linkedin.com/in/colleenmck/" target="_blank">
+              <img src="/linkedin.svg" alt="linkedin icon"/>
             </a>
           </div>
         </div>

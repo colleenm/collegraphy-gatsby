@@ -4,7 +4,7 @@ import Page from "../components/Page"
 
 export default function About() {
   return (
-    <div>
+    <div className="full-page-container">
       <Header currentPage={'about'} />
       <Page>
         <div style={{display: 'flex'}}>
@@ -17,7 +17,7 @@ export default function About() {
             </p>
           </div>
           <img src="/headshot-bw.jpeg" className="framed-img headshot" height="300"
-               style={{marginLeft: '24px'}} />
+               style={{marginLeft: '24px'}} alt="headshot" />
         </div>
       </Page>
     </div>

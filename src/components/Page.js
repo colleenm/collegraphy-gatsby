@@ -1,19 +1,14 @@
 import React from 'react'
-import { Link } from "gatsby"
-
+import Card from "../components/Card"
 
 class Page extends React.Component {
-  constructor() {
-    super()
-  }
-
 
   render() {
     return (
-      <div className="page-container">
-        <div className="main-page-card double-border">
+      <div className="page-container full-page">
+        <Card className="main-page-card">
           {this.props.children}
-        </div>
+        </Card>
       </div>
     )
   }

@@ -4,11 +4,11 @@ import Page from "../components/Page"
 
 export default function Home() {
   return (
-    <div>
+    <div className="full-page-container">
       <Header currentPage={'home'} />
-      <div className="page-container">
-        <div className="double-border">design page</div>
-      </div>
+      <Page>
+        hi it's a homepage!
+      </Page>
     </div>
   )
 }

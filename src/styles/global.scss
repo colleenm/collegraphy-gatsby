@@ -8,6 +8,7 @@ $link-color: #3579C8;
 /* fonts */
 $default-font: 'EB Garamond', serif;
 $accent-font: 'Lucida Grande', 'Geneva', sans-serif;
+$title-size: 40px;
 
 /* page layout */
 $mob-breakpoint: 600px;
@@ -24,6 +25,7 @@ $content-horiz-margin-mob: 12px;
 
 /* misc accents */
 $default-border: 1px solid #999;
+$subtle-shadow: 0px 1px 7px -3px rgba(0,0,0,0.3);
 $default-transition-time: 300ms;
 
 
@@ -35,32 +37,35 @@ html {
 }  
 
 body {
-  width: 85%;
-  max-width: 1100px;
-  margin: 48px auto;
-}
-
-@media (max-width: $mob-breakpoint) {
-  body {
-    @include reset-spacing;
-    width: auto;
-    padding: 16px 0;
-  }
+  @include reset-spacing;
 }
 
 a {
   color: $link-color;
   text-decoration: none;
 }
+a:hover, a:focus {
+  color: #014892;
+}
 
 .button {
   font-family: $accent-font;
   text-transform: uppercase;
   letter-spacing: 1.5pt;
+  cursor: pointer;
+  padding: 6px 12px;
+}
+.button:hover, .button:focus {
+  box-shadow: $subtle-shadow;
 }
 
 ul {
   @include reset-spacing;
+  list-style-image: url('/bullet.svg');
+  //list-style-type: '\25C7 ';
+}
+.bordered-content ul {
+  padding-inline-start: 24px;
 }
 
 p:first-child {
@@ -71,14 +76,103 @@ p:last-child {
   margin-bottom: 0;
 }
 
+h1, h2, h3, h4 {
+  font-weight: normal;
+  margin: 0;
+}
+
+h3, h4 {
+  font-weight: normal;
+  margin: 1em 0;
+}
+
+h1 {
+  font-size: $title-size;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  text-align: center;
+  letter-spacing: 2pt;
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #999;
+}
+
+h4 {
+  font-family: $accent-font;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+}
+
+hr {
+  margin-block-start: 3em;
+  margin-block-end: 3em;
+  border: 0;
+  height: 1px;
+  background: #aaa;
+  width: 90%;
+}
+
+.vr { // this usually just won't display on mobile, at least in flex row containers
+  width: 1px;
+  background-color: #999;
+  display: unset;
+  margin: 2% 2em;
+}
+
+iframe {
+  border: none;
+}
+
+.caption {
+  color: #666;
+  font-family: $accent-font;
+  font-size: .8em;
+}
+
 .framed-img {
   border: $default-border;
   padding: 2px;
 }
 
+.center-text {
+  text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.inline-icon {
+  vertical-align: sub;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.full-page-container {
+  width: 85%;
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 48px;
+}
+@media (max-width: $mob-breakpoint) {
+  .full-page-container {
+    @include reset-spacing;
+    width: auto;
+    padding: 16px 0;
+  }
+}
+
+
+
 /* -------- Page header -------- */
 $header-height: 32px;
-$title-size: 40px;
 $subtitle-size: 18px;
 $subtitle-top-margin: $header-height - $subtitle-size;
 
@@ -92,17 +186,22 @@ $subtitle-top-margin: $header-height - $subtitle-size;
   .page-title {
     font-size: $title-size;
     /* Make sure title displays over mobile dropdown nav */
-    z-index: 100;
+    z-index: 20;
   }
 
   .page-title a {
     color: $default-font-color;
+    letter-spacing: 3pt;
+  }
+  .page-title a:hover, .page-title a:focus {
+    color: #014892;
   }
 
   .page-subtitle {
     font-size: $subtitle-size;
-    line-height: $subtitle-size;
+    line-height: $subtitle-size + 1; /* necessary w/margin bottom idk why */
     margin-top: $subtitle-top-margin;
+    margin-bottom: -1px;
   }
 }
 
@@ -133,6 +232,7 @@ $mob-subtitle-size: 16px;
       margin-top: 8px;
       margin-right: 0;
       margin-left: auto;
+      page-subtitle: 24px;
     }
   }
 
@@ -163,6 +263,7 @@ $nav-icon-open-margin: 4px;
     }
 
     .nav-icon-left {
+      margin-left: 0;
       transform: rotate(45deg);
       transition: margin-left $default-transition-time;
     }
@@ -172,29 +273,32 @@ $nav-icon-open-margin: 4px;
       transform: rotate(-45deg);
       transition: margin-left $default-transition-time;
     }
+  }
 
-    .nav-open .nav-icon-left, .nav-open .nav-icon-right {
-      margin-left: $nav-icon-open-margin;
-      width: $nav-icon-line-open;
-      transition: margin-left $default-transition-time;
-    }
+  .nav-open .nav-icon-left, .nav-open .nav-icon-right {
+    margin-left: $nav-icon-open-margin;
+    width: $nav-icon-line-open;
+    transition: margin-left $default-transition-time;
   }
 }
 
 /* -------- Nav bar -------- */
 .nav-menu {
   @include flex-between;
-  margin: 32px 0;
-  padding: 0 36px;
+  margin: 20px 0; // looks like more b/c of .social img height
+  padding: 0 28px 0 24px; // looks more like 36px, .button and .social img have padding
 
   ul {
     list-style: none;
+    // vert align with .social
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   li {
     font-size: 14px;
     display: inline-block;
-    margin-right: 32px;
+    margin-right: 16px;
   }
 
   .nav-current-page {
@@ -202,11 +306,18 @@ $nav-icon-open-margin: 4px;
   }
 
   .social a {
-    margin-left: 16px;
+    display: inline-block;
+    margin-left: 8px;
   }
 
   .social img {
-    height: 20px;
+    height: 16px;
+    padding: 8px;
+  }
+
+  .social img:hover {
+    box-shadow: $subtle-shadow;
+    filter: brightness(0.5) saturate(2); // approximate link hover color
   }
 }
 
@@ -244,7 +355,6 @@ $nav-icon-open-margin: 4px;
 
     .social a {
       display: inline-block;
-      margin-left: 24px;
     }
 
     .social img {
@@ -254,14 +364,100 @@ $nav-icon-open-margin: 4px;
   .nav-menu.nav-open {
     height: 152px;
     transition: height 300ms;
+    box-shadow: 0 5px 6px -2px rgba(0,0,0,0.3);
   }
 }
 
+/* -------- Image gallery -------- */
+.scrim {
+  position: fixed;
+  top: 0vh;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 50;
+}
+
+.scrim.hidden {
+  display: none;
+}
+
+.gallery-close-icon {
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 53;
+  cursor: pointer;
+}
+.gallery-close-icon.hidden {
+  display: none;
+}
+
+.gallery-close-icon-left, .gallery-close-icon-right {
+  height: 1px;
+  width: 32px;
+  border: 1px solid #fff;
+  background-color: #fff;
+  position: absolute;
+  top: 16px;
+  right: 1px;
+}
+
+.gallery-close-icon-left {
+   transform: rotate(45deg);
+}
+
+.gallery-close-icon-right {
+   transform: rotate(-45deg);
+}
+
+.expanded-image-vert-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 51;
+}
+.expanded-image-vert-container.hidden {
+  display: none;
+}
+
+.expanded-image-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+img.expanded-image {
+  flex-grow: 0;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  z-index: 51;
+}
+
+@media (max-width: $mob-breakpoint) {
+  .gallery-close-icon {
+    top: 12px;
+    right: 12px;
+  }
+}
 
 /* -------- Page main content -------- */
 .page-container {
+  padding: 0 36px;
+}
+
+.full-page {
   min-height: 60vh;
-  padding: 0 $content-horiz-margin-desk;
   /* god I hate css this is just to get .main-page-card to fill height */
   display: flex;
   flex-direction: column;
@@ -271,19 +467,28 @@ $nav-icon-open-margin: 4px;
 .main-page-card {
   flex-grow: 1;
   height: 100%;
+  /* and again as in .page-container */
+  display: flex;
 }
 
 /* Double border: main card */
-.double-border {
-  padding: 24px 30px; /* extra horiz padding to account for border diff */
+.double-border-outer {
   background-color: $card-background-color;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.double-border-inner {
+  padding: 36px 42px; /* extra horiz padding to account for border diff */
   border: $default-border;
+  margin: -6px 4px;
+  flex-grow: 1;
 }
 
 /* Double border: white background */
-.double-border:before {
+.double-border-outer:before {
   content: ' ';
   background-color: $card-background-color;
   position: absolute;
@@ -291,28 +496,322 @@ $nav-icon-open-margin: 4px;
   right: 4px;
   bottom: -6px;
   left: 4px;
-  z-index: -1;
+  z-index: -100;
 }
 
-/* Double border: border */
-.double-border:after {
+.double-border-inner:before {
   content: ' ';
-  position: absolute;
-  top: -6px;
-  right: 4px;
-  bottom: -6px;
-  left: 4px;
   border: $default-border;
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+  z-index: -100;
 }
 
+.card-close-icon {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+}
+
+.card-close-icon-left, .card-close-icon-right {
+  position: absolute;
+  height: 0;
+  width: 16px;
+  border: 1px solid #666;
+  /* center within .card-close.icon */
+  top: 11px;
+  left: 3px;
+}
+
+.card-close-icon-left {
+  transform: rotate(45deg);
+}
+
+.card-close-icon-right {
+  transform: rotate(-45deg);
+}
+
+.card-heading {
+  @include flex-between;
+  border-bottom: $default-border;
+  margin-bottom: 16px;
+}
+
+h2.card-title {
+  line-height: 20px; /* align border w/text baseline */
+  padding-top: 12px;
+  padding-left: 24px;
+}
+
+/* TODO this should prob be calculated in constants */
+.card-subtitle {
+  line-height: 32px;
+  margin-top: 9px;
+  margin-bottom: -9px;
+  padding-right: 24px;
+  color: #666;
+  font-weight: 500;
+}
+
+.full-bleed {
+  /* No card padding; top padding to avoid overlap with border */
+  padding: 0;
+  padding-top: 5px;
+}
 
 @media (max-width: $mob-breakpoint) {
   .page-container {
     padding-left: $content-horiz-margin-mob;
     padding-right: $content-horiz-margin-mob;
   }
+
+  .double-border-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  h2.card-title, .card-subtitle {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  h2.card-title {
+    font-size: 20px;
+  }
 }
 
+
+/* -------- Design page styles -------- */
+
+.design-page {
+  // this is actually just to get the big card not to exptend past the right
+  // edge of .design-page, because CSS is a terrible but not intractable ally
+  display: flex;
+  flex-direction: column;
+}
+
+.design-snippets {
+  @include flex-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.design-snippets.small-snippets {
+  flex-wrap: nowrap;
+}
+
+.design-card {
+  min-width: 200px;
+  max-width: 48%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  transition: width 300ms;
+  margin-bottom: 4%;
+}
+
+.design-snippets.small-snippets .design-card {
+  min-width: 0;
+  max-width: 21%;
+  margin-right: 24px;
+  flex-shrink: 1;
+}
+.design-snippets.small-snippets .design-card:last-child {
+  margin-right: 0;
+}
+
+.design-snippet-img {
+  max-width: 100%;
+  filter: grayscale(100%);
+  opacity: 50%;
+  cursor: pointer;
+}
+
+.design-snippet-img:hover, .design-snippet-img:focus {
+  filter: none;
+  opacity: 1;
+  outline: none;
+}
+
+.small-snippets > .design-snippet-img:hover,
+    .small-snippets > .design-snippet-img:focus {
+  opacity: .7; 
+  outline: none;
+}
+
+.design-snippet-img.selected {
+  filter: none;
+  opacity: 1;
+}
+
+.big-design-card {
+  display: inline-block; /* block breaks borders ¯\_(ツ)_/¯ */
+  margin-bottom: 36px;
+}
+.big-design-card.hidden {
+  display: none;
+}
+
+.card-content {
+  padding: 0 24px; // TODO make this a variable same as l/r padding around card title
+}
+
+.card-section {
+  @include flex-between;
+}
+
+.overline {
+  font-family: "Lucida Grande";
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-size: .8em;
+  margin-bottom: .5em;
+}
+
+.highlight-section {
+  display: flex;
+  justify-content: space-around;
+  margin: 2em auto;
+}
+
+.highlight-words {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3%;
+  margin-top: 0;
+}
+
+.highlight-words p {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.1em;
+}
+
+.highlight-images {
+  @include flex-between;
+  max-height: 450px;
+}
+
+.highlight-images .design-img-container {
+  height: 100%;
+}
+
+.highlight-images > .design-detail-img {
+  height: 100%; // shrink to fit .highlight-images container
+  width: auto;
+}
+
+.design-img-container {
+  //max-width: 30%;
+}
+
+.design-detail-img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.source-proto-desktop {
+  text-align: center;
+}
+
+.source-proto-mobile {
+  display: none;
+}
+
+.source-proto-phone-frame {
+  background-image: url('/iphone-frame.svg');
+  padding: 8px 20px;
+  background-position: top;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.source-figma-proto {
+  display: block;
+  height: 538px;
+  width: 250px;
+  border-radius: 24px;
+  margin: 3px auto;
+}
+
+@media (max-width: $mob-breakpoint) {
+  .design-page {
+    padding: 0 12px;
+  }
+
+  .design-card {
+    margin: 24px auto;
+    max-width: 100%;
+  }
+
+  .design-snippets.small-snippets {
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .design-snippets.small-snippets .design-card {
+    margin: 0;
+    margin-bottom: 36px;
+    max-width: 47%;
+  }
+  .design-snippets.small-snippets .design-card:last-child {
+    margin-right: 0;
+  }
+
+  .card-content {
+    padding: 0;
+  }
+
+  div.noflex-mob {
+    display: block;
+  }
+
+  .source-proto-desktop {
+    display: none;
+  }
+
+  .source-proto-mobile {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+  }
+ 
+  .design-detail-image-gallery {
+    margin-top: 24px;
+  }
+  
+  .design-img-container {
+    max-width: auto;
+  }
+
+  .design-detail-img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .highlight-words {
+    max-width: auto;
+  }
+ 
+}
+
+/* Source */
+.source-headline-imgs {
+  display: flex;
+  justify-content: space-between;
+  margin: 48px 10%;
+}
+
+.source-headline-imgs img {
+  max-width: 25%;
+}
 
 /* -------- About page styles -------- */
 
